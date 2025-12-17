@@ -12,6 +12,7 @@ This package is designed for general purpose communication with Unity Editor, fo
 - Cursor
 - Windsurf
 - Trae
+- Qoder
 
 About the forks:
 All forks are treated as if they are Visual Studio Code, but with different executable name, extension path(where their extensions are installed) and a few other minor differences.

@@ -72,6 +72,15 @@ namespace Hackerzhuli.Code.Editor.Code
                 MacAppName = "Trae.app",
                 LinuxExeName = "trae",
                 UserDataDirName = ".trae"
+            },
+            new()
+            {
+                Name = "Qoder",
+                WindowsDefaultDirName = "Qoder",
+                WindowsExeName = "Qoder.exe",
+                MacAppName = "Qoder.app",
+                LinuxExeName = "qoder",
+                UserDataDirName = ".qoder"
             }
         };
 
