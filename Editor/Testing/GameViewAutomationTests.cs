@@ -346,7 +346,12 @@ namespace Hackerzhuli.Code.Editor.Testing
             Assert.That(inspection, Does.Contain("  resolvedStyles:\n"));
             Assert.That(inspection, Does.Contain("properties:\n"));
             Assert.That(inspection, Does.Contain("  CustomValue: \"created\""));
+#if UNITY_6000_0_OR_NEWER
+            // Built-in VisualElement members carry [CreateProperty] from Unity 6 on.
             Assert.That(inspection, Does.Contain("  childCount: 1"));
+#else
+            Assert.That(inspection, Does.Not.Contain("  childCount: "));
+#endif
             Assert.That(inspection, Does.Not.Contain("\n  panel: "));
             Assert.That(inspection, Does.Not.Contain("\n  localBound: "));
             Assert.That(inspection, Does.Not.Contain("\n  userData: "));
@@ -374,7 +379,9 @@ namespace Hackerzhuli.Code.Editor.Testing
 
             var inspection = _service.BuildInspectionForTests(target);
             var resolvedStart = inspection.IndexOf("  resolvedStyles:\n", StringComparison.Ordinal);
-            var propertiesStart = inspection.IndexOf("properties:\n", resolvedStart,
+            // The header is matched with its leading newline: when the properties section is
+            // empty, TrimEnd strips the header's own trailing newline instead.
+            var propertiesStart = inspection.IndexOf("\nproperties:", resolvedStart,
                 StringComparison.Ordinal);
             var resolvedStyles = inspection.Substring(resolvedStart,
                 propertiesStart - resolvedStart);

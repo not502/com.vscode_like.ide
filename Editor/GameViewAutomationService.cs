@@ -727,8 +727,10 @@ namespace Hackerzhuli.Code.Editor
             AppendYamlValue(builder, 1, "debugId", GetInternalMemberValue(element, "controlid"));
             AppendYamlValue(builder, 1, "tooltip", element.tooltip);
             AppendYamlValue(builder, 1, "viewDataKey", element.viewDataKey);
+#if UNITY_6000_0_OR_NEWER
             AppendYamlValue(builder, 1, "dataSourceType", element.dataSource?.GetType().FullName);
             AppendYamlValue(builder, 1, "dataSourcePath", element.dataSourcePath);
+#endif
             AppendYamlValue(builder, 1, "pickingMode", element.pickingMode);
             AppendYamlValue(builder, 1, "pseudoStates", GetInternalMemberValue(element, "pseudoStates"));
             AppendYamlValue(builder, 1, "focusable", element.focusable);
@@ -1673,18 +1675,18 @@ namespace Hackerzhuli.Code.Editor
             var xs = new[] { 0.5f, 0.2f, 0.8f };
             var ys = new[] { 0.5f, 0.2f, 0.8f };
             foreach (var y in ys)
-            foreach (var x in xs)
-            {
-                var candidate = new Vector2(
-                    Mathf.Lerp(rect.xMin, rect.xMax, x),
-                    Mathf.Lerp(rect.yMin, rect.yMax, y));
-                var picked = element.panel.Pick(candidate);
-                if (picked != null && (picked == element || element.Contains(picked)))
+                foreach (var x in xs)
                 {
-                    point = candidate;
-                    return true;
+                    var candidate = new Vector2(
+                        Mathf.Lerp(rect.xMin, rect.xMax, x),
+                        Mathf.Lerp(rect.yMin, rect.yMax, y));
+                    var picked = element.panel.Pick(candidate);
+                    if (picked != null && (picked == element || element.Contains(picked)))
+                    {
+                        point = candidate;
+                        return true;
+                    }
                 }
-            }
 
             point = default;
             return false;
